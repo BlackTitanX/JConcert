@@ -30,7 +30,7 @@ public class EntradaService {
     // Declarando variables comunes
     Optional<Evento> evento;
     Optional<Cliente> cliente;
-
+    Optional<Entrada> entrada;
     
 
     //crear metodo para generar numero de entrada y entrada de forma segura
@@ -80,7 +80,11 @@ public class EntradaService {
         }
     }
 
-
-
-
+    public Optional<Entrada> getEntrada(Long idEntrada) {
+        try {
+            return entradaRepository.findById(idEntrada);
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
 }
