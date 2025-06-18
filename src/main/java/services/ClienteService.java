@@ -3,7 +3,6 @@ package services;
 
 import jakarta.persistence.EntityNotFoundException;
 import models.Cliente;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repositories.ClienteRepository;
 
@@ -11,7 +10,7 @@ import repositories.ClienteRepository;
 public class ClienteService {
     ClienteRepository clienteRepository;
 
-    @Autowired
+
     public boolean crearCliente(Cliente cliente){
 
         try{
@@ -35,10 +34,11 @@ public class ClienteService {
 
 
     public boolean actualizarCliente(Cliente cliente, Long id) {
-        try {
-            Cliente clienteEncontrado = clienteRepository.findById(id)
-                    .orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado con id: " + id));
 
+        Cliente clienteEncontrado = clienteRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado con id: " + id));
+
+        try {
             clienteEncontrado.setFirstName(cliente.getFirstName());
             clienteEncontrado.setLastName(cliente.getLastName());
 

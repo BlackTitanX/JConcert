@@ -1,4 +1,86 @@
 package services;
 
+import models.Cliente;
+import models.Entrada;
+import models.Evento;
+import org.springframework.beans.factory.annotation.Autowired;
+import repositories.ClienteRepository;
+import repositories.EntradaRepository;
+import repositories.EventoRepository;
+
+import java.time.Instant;
+import java.time.Year;
+import java.util.Optional;
+import java.util.UUID;
+
+
+
+
+
 public class EntradaService {
+    
+    // Trayendo los repositorios
+    @Autowired
+    EventoRepository eventoRepository;
+    @Autowired
+    ClienteRepository clienteRepository;
+    @Autowired
+    EntradaRepository entradaRepository;
+    
+    // Declarando variables comunes
+    Optional<Evento> evento;
+    Optional<Cliente> cliente;
+
+    
+
+    //crear metodo para generar numero de entrada y entrada de forma segura
+    // buscar informacion de entrada
+    //Asignar asiento al momento de comprar entrada
+
+    
+    // Funcion para crear numero unido
+    private static String generarIdDinamico(String tipoDeEntrada, int fila, char columna) {
+        // 1. Obtiene el año actual de forma dinámica
+        String anioActual = Year.now().toString();
+
+        // 2. Obtiene la hora actual en milisegundos para una alta granularidad
+        long timestamp = Instant.now().toEpochMilli();
+
+        // 3. Genera un UUID y toma una parte para añadir más aleatoriedad
+        String randomUUIDPart = UUID.randomUUID().toString().substring(0, 8);
+
+        // 4. Concatena todos los elementos para formar el ID final
+        return "EV-" + anioActual + "-"+ tipoDeEntrada +"-" +columna + fila +"-"+timestamp + "-" + randomUUIDPart;
+    }
+    
+    
+    public boolean crearEntrada(Long idEvento, Long idCliente, double precio,String tipoDeEntrada, int fila, char columna  ){
+        
+        try {
+            evento = eventoRepository.findById(idEvento);
+            cliente = clienteRepository.findById(idCliente);
+
+            Entrada entrada = new Entrada();
+
+            if(evento.isPresent() && cliente.isPresent()){
+
+
+                entrada.setEvento(evento.get());
+                entrada.setCliente(cliente.get());
+                entrada.setNumeroDeEntrada(generarIdDinamico(tipoDeEntrada, fila, columna));
+                entrada.setPrecio(precio);
+                entradaRepository.save(entrada);
+
+
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+
+
+
 }

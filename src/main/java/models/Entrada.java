@@ -12,8 +12,9 @@ public class Entrada {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
     private double precio;
+    private String numeroDeEntrada; // El-2025-01-numerorandom
 
-    protected Entrada() {}
+    public Entrada() {}
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cliente_id")
