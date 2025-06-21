@@ -1,12 +1,13 @@
-package services;
+package com.eventos.JConcert.services;
 
-import models.Cliente;
-import models.Entrada;
-import models.Evento;
+import com.eventos.JConcert.models.Cliente;
+import com.eventos.JConcert.models.Entrada;
+import com.eventos.JConcert.models.Evento;
 import org.springframework.beans.factory.annotation.Autowired;
-import repositories.ClienteRepository;
-import repositories.EntradaRepository;
-import repositories.EventoRepository;
+import com.eventos.JConcert.repositories.ClienteRepository;
+import com.eventos.JConcert.repositories.EntradaRepository;
+import com.eventos.JConcert.repositories.EventoRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.time.Year;
@@ -53,7 +54,7 @@ public class EntradaService {
         return "EV-" + anioActual + "-"+ tipoDeEntrada +"-" +columna + fila +"-"+timestamp + "-" + randomUUIDPart;
     }
     
-    
+    @Transactional
     public boolean crearEntrada(Long idEvento, Long idCliente, double precio,String tipoDeEntrada, int fila, char columna  ){
         
         try {

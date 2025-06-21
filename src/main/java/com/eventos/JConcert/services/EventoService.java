@@ -1,21 +1,25 @@
-package services;
-import models.Cliente;
+package com.eventos.JConcert.services;
+import com.eventos.JConcert.models.Cliente;
 import org.springframework.beans.factory.annotation.Autowired;
-import repositories.EntradaRepository;
-import repositories.EventoRepository;
-import models.Evento;
-import models.Entrada;
+import com.eventos.JConcert.repositories.EntradaRepository;
+import com.eventos.JConcert.repositories.EventoRepository;
+import com.eventos.JConcert.models.Evento;
+import com.eventos.JConcert.models.Entrada;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class EventoService {
-
+ @Autowired
  EventoRepository eventoRepository;
+ @Autowired
  EntradaRepository entradaRepository;
 
- @Autowired
+
  Optional<Evento> evento;
  List<Entrada> entradasEncontradas = new ArrayList<>();
 
@@ -24,17 +28,12 @@ public class EventoService {
        return (List<Evento>) (ArrayList<Evento>) eventoRepository.findAll();
    }
 
-    public boolean crearEvento(Evento evento){
+    @Transactional
+    public Evento crearEvento(Evento evento){
 
-        try{
-            eventoRepository.save(evento);
-            return true;
-        }catch (Exception e){
+       eventoRepository.save(evento);
 
-            return false;
-        }
-
-
+     return evento;
     }
 
     public List<Cliente> obtenerListaDeAssistente(Long eventoId){

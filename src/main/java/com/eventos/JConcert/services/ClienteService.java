@@ -1,16 +1,20 @@
-package services;
+package com.eventos.JConcert.services;
 
 
 import jakarta.persistence.EntityNotFoundException;
-import models.Cliente;
+import com.eventos.JConcert.models.Cliente;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import repositories.ClienteRepository;
+import com.eventos.JConcert.repositories.ClienteRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ClienteService {
+
+    @Autowired
     ClienteRepository clienteRepository;
 
-
+    @Transactional
     public boolean crearCliente(Cliente cliente){
 
         try{

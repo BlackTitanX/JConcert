@@ -1,14 +1,15 @@
-package repositories;
+package com.eventos.JConcert.repositories;
 
 import java.util.List;
-import models.Cliente;
+import com.eventos.JConcert.models.Cliente;
 
-import models.Evento;
+import com.eventos.JConcert.models.Evento;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface ClienteRepository extends CrudRepository<Cliente, Long> {
 
-    List<Cliente> findByEvento(Evento evento);
 
     Cliente findById(long id);
 

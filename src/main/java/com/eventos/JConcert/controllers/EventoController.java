@@ -1,12 +1,13 @@
-package controllers;
+package com.eventos.JConcert.controllers;
 
-import models.Cliente;
-import models.Evento;
+import com.eventos.JConcert.models.Cliente;
+import com.eventos.JConcert.models.Evento;
+import com.eventos.JConcert.repositories.EventoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import services.EventoService;
+import com.eventos.JConcert.services.EventoService;
 
 import java.util.List;
 
@@ -33,12 +34,11 @@ public class EventoController {
     }
 
     @PostMapping // resolves to POST /api/eventos
-    public ResponseEntity<String> createEvento(@RequestBody Evento evento) {
-        if (eventoService.crearEvento(evento)) {
-            return new ResponseEntity<>("Evento created successfully!", HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity<>("Failed to create event. Please check the data.", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public ResponseEntity<Evento> createEvento(@RequestBody Evento evento) {
+
+        Evento eventoGuardado = eventoService.crearEvento(evento);
+
+        return new ResponseEntity<>(eventoGuardado, HttpStatus.CREATED);
     }
 
     @GetMapping("/{eventoId}/asistentes") // resolves to GET /api/eventos/{eventoId}/asistentes

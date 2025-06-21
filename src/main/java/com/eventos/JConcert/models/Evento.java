@@ -1,4 +1,4 @@
-package models;
+package com.eventos.JConcert.models;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -21,13 +21,15 @@ public class Evento {
     private int chairsAvailable;
 
     @OneToMany(mappedBy = "evento", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Entrada> entradas;
+    private List<Entrada> entradas = new java.util.ArrayList<>();
 
     protected Evento() {}
 
-    public Evento(String name, LocalDate date) {
+    public Evento(String name, LocalDate date, String location, int chairsAvailable) {
         this.name = name;
         this.date = date;
+        this.location = location;
+        this.chairsAvailable = chairsAvailable;
     }
 
     @Override

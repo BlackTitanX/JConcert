@@ -1,4 +1,4 @@
-package models;
+package com.eventos.JConcert.models;
 
 import jakarta.persistence.*;
 import lombok.Getter;
